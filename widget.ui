@@ -75,7 +75,7 @@
        <string>计算</string>
       </property>
      </widget>
-     <widget class="QWidget" name="">
+     <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
         <x>70</x>
@@ -275,18 +275,16 @@
        </item>
       </layout>
      </widget>
-     <zorder>layoutWidget</zorder>
-     <zorder>layoutWidget</zorder>
      <zorder>calculate_button</zorder>
      <zorder>layoutWidget</zorder>
      <zorder>layoutWidget</zorder>
-     <zorder>layoutWidget</zorder>
-     <zorder>widget_2</zorder>
-     <zorder>widget_2</zorder>
-     <zorder>widget_2</zorder>
-     <zorder>widget_2</zorder>
-     <zorder>widget_2</zorder>
-     <zorder>widget_2</zorder>
+    </widget>
+   </item>
+   <item>
+    <widget class="Line" name="line">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
     </widget>
    </item>
    <item>
@@ -329,7 +327,7 @@
        <string>计算当前期望脉冲</string>
       </property>
      </widget>
-     <widget class="QWidget" name="">
+     <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
         <x>70</x>
@@ -519,18 +517,9 @@
        </item>
       </layout>
      </widget>
-     <zorder>widget</zorder>
-     <zorder>widget</zorder>
-     <zorder>layoutWidget_2</zorder>
-     <zorder>layoutWidget_3</zorder>
-     <zorder>label_19</zorder>
-     <zorder>layoutWidget_4</zorder>
+     <zorder>layoutWidget</zorder>
      <zorder>layoutWidget_5</zorder>
      <zorder>calculate_button_roll</zorder>
-     <zorder>label_30</zorder>
-     <zorder>lineEdit</zorder>
-     <zorder>layoutWidget_6</zorder>
-     <zorder>widget</zorder>
     </widget>
    </item>
   </layout>
