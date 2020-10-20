@@ -15,6 +15,13 @@ Widget::Widget(QWidget *parent) :
     ui->Edit_ratio_1->setValidator(new QRegExpValidator(QRegExp("^(-?[0]|-?[1-9][0-9]{0,5})(?:\\.\\d{1,4})?$|(^\\t?$)")));   //只能输入数字
     ui->Edit_ratio_2->setValidator(new QRegExpValidator(QRegExp("^(-?[0]|-?[1-9][0-9]{0,5})(?:\\.\\d{1,4})?$|(^\\t?$)")));   //只能输入数字
     ui->Edit_pulse->setValidator(new QRegExpValidator(QRegExp("^(-?[0]|-?[1-9][0-9]{0,5})(?:\\.\\d{1,4})?$|(^\\t?$)")));   //只能输入数字
+    ui->Edit_period->setValidator(new QRegExpValidator(QRegExp("^(-?[0]|-?[1-9][0-9]{0,5})(?:\\.\\d{1,4})?$|(^\\t?$)")));   //只能输入数字
+
+    ui->Edit_Roll_rpm->setValidator(new QRegExpValidator(QRegExp("^(-?[0]|-?[1-9][0-9]{0,5})(?:\\.\\d{1,4})?$|(^\\t?$)")));   //只能输入数字
+    ui->Edit_roll_ratio_1->setValidator(new QRegExpValidator(QRegExp("^(-?[0]|-?[1-9][0-9]{0,5})(?:\\.\\d{1,4})?$|(^\\t?$)")));   //只能输入数字
+    ui->Edit_roll_pulse->setValidator(new QRegExpValidator(QRegExp("^(-?[0]|-?[1-9][0-9]{0,5})(?:\\.\\d{1,4})?$|(^\\t?$)")));   //只能输入数字
+    ui->Edit_period_2->setValidator(new QRegExpValidator(QRegExp("^(-?[0]|-?[1-9][0-9]{0,5})(?:\\.\\d{1,4})?$|(^\\t?$)")));   //只能输入数字
+
 }
 
 Widget::~Widget()
@@ -81,4 +88,56 @@ void Widget::on_calculate_button_clicked()
     data = QString("%1").arg(wheel_turn);
     ui->Edit_TURN->setText(data);
 
+}
+
+void Widget::on_calculate_button_roll_clicked()
+{
+    if(ui->Edit_Roll_rpm->text()==nullptr||ui->Edit_Roll_rpm->text()==0){
+        qDebug()<<"error";
+        QMessageBox::warning(this,"ERROR","No rpm input",QMessageBox::Cancel|QMessageBox::Escape|QMessageBox::Default,0);
+        return;
+    }else{
+        rpm_roll = ui->Edit_Roll_rpm->text().toFloat();
+        qDebug()<<"rpm_roll = "<<rpm_roll;
+    }
+
+    if(ui->Edit_roll_ratio_1->text()==nullptr||ui->Edit_roll_ratio_2->text()==nullptr||
+            ui->Edit_roll_ratio_1->text()==0||ui->Edit_roll_ratio_2->text()==0){
+        qDebug()<<"error";
+        QMessageBox::warning(this,"ERROR","No reduction_ratio input",QMessageBox::Cancel|QMessageBox::Escape|QMessageBox::Default,0);
+        return;
+    }else{
+        float ratio_1 = ui->Edit_roll_ratio_1->text().toFloat();
+        float ratio_2 = ui->Edit_roll_ratio_2->text().toFloat();
+        reduction_ratio_roll = ratio_1 / ratio_2;
+        qDebug()<<"reduction_ratio = "<<reduction_ratio_roll;
+    }
+
+
+    if(ui->Edit_roll_pulse->text()==nullptr||ui->Edit_roll_pulse->text()==0){
+        qDebug()<<"error";
+        QMessageBox::warning(this,"ERROR","No round_pulse input",QMessageBox::Cancel|QMessageBox::Escape|QMessageBox::Default,0);
+        return;
+    }else{
+        gather_mode_roll = float(ui->comboBox_2->currentIndex()==0?2:1);
+        qDebug()<<"gather_mode = "<<gather_mode_roll;
+        round_pulse_roll = (ui->Edit_roll_pulse->text().toFloat())*gather_mode_roll;
+        qDebug()<<"round_pulse = "<<round_pulse_roll;
+    }
+
+    if(ui->Edit_period_2->text()==nullptr||ui->Edit_period_2->text()==0){
+        qDebug()<<"error";
+        QMessageBox::warning(this,"ERROR","No round_pulse input",QMessageBox::Cancel|QMessageBox::Escape|QMessageBox::Default,0);
+        return;
+    }else{
+        period_roll = (ui->Edit_period_2->text().toFloat());
+        qDebug()<<"period = "<<period_roll;
+    }
+
+
+    hope_pulse = (((((rpm_roll/60)*(1/reduction_ratio_roll)))/1000)*period_roll)*round_pulse_roll;
+     qDebug()<<"hope_pulse = "<<hope_pulse;
+
+     QString data = QString("%1").arg(hope_pulse);
+     ui->Edit_roll_hope->setText(data);
 }
